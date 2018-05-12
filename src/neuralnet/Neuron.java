@@ -5,6 +5,9 @@
  */
 package neuralnet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Victor Tassinari
@@ -13,7 +16,17 @@ public class Neuron {
     private double treshold;
     private double weigth;
     private double input;
+    private List<Neuron> net;
 
+    public void calculateNetInput(){
+        input=0;
+        net.forEach(neuron->{
+//            System.out.println(neuron.getWeigth());
+            input+= neuron.getInput()*neuron.getWeigth();
+        });
+//        System.out.println(input);
+    }
+    
     public double getTreshold() {
         return treshold;
     }
@@ -29,13 +42,9 @@ public class Neuron {
     public void setWeigth(double weigth) {
         this.weigth = weigth;
     }
-
-    public double getOutput() {
-        return input*weigth;
-    }
-
-    public int bitOutput(){
-        if(getOutput()>=treshold){
+    
+    public int getOutput(){
+        if((input*weigth)>=treshold){
             return 1;
         }else{
             return 0;
@@ -48,5 +57,15 @@ public class Neuron {
 
     public void setInput(double input) {
         this.input = input;
+    }
+
+    public List<Neuron> getNet() {
+        if(net==null)
+            net = new ArrayList<>();
+        return net;
+    }
+
+    public void setNet(List<Neuron> net) {
+        this.net = net;
     }
 }
